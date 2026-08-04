@@ -1,0 +1,80 @@
+URBANEDGE — IMAGE FOLDER GUIDE
+==============================
+Drop your downloaded images into the folders below. Keep the filenames
+exactly as shown — the website already points to them.
+
+Tip: Use landscape photos (16:9 or 4:3). JPG or WEBP, at least 1200px wide.
+Logos: PNG with transparent background, at least 400px wide.
+
+
+logo/
+-----
+  logo.png          — PNG with TRUE transparency (checkerboard in editors, NOT black fill)
+                      For dark headers/footers, export with:
+                        • Orange "URBANEDGE" text
+                        • White or light grey gear + "MINING & ENGINEERING" (visible on dark bg)
+                      Avoid exporting on a black or white canvas — use transparent background
+
+
+heroes/             — Full-width banner behind page titles
+-----
+  home.webp         — Home hero background
+  about.webp        — About page banner
+  services.webp     — Services page banner
+  clients.webp      — Clients page banner
+  contact.webp      — Contact page banner
+  (Projects page uses projects/openpit.jpg for its banner)
+
+
+home/               — Home page service cards
+-----
+  mining-supply.jpg (or use root mining-supply.jpg)
+  workers-placing-new-coating-asphalt-road.jpg  — Civil card
+  civilworks1.jpg                               — Construction card
+  mechanicalengineering.jpg                       — Mechanical card
+
+
+about/
+-----
+  collage-main.webp — Large photo (team + equipment)
+  collage-1.webp    — Smaller photo left
+  collage-2.webp    — Smaller photo right
+
+
+leadership/
+-----
+  warren-kabunda.jpg
+  sydney-kangwa.jpg
+
+
+services/           — Service cards not covered by projects folder
+-----
+  logistics.jpg
+  projectmanagement.jpg
+
+
+projects/           — Project grid + shared service images
+-----
+  openpit.jpg
+  miningoperations.jpg
+  civilworks1.jpg
+  roadconstruction.jpg
+  mechanicalengineering.jpg
+
+
+Root (assets/images/)
+-----
+  quartz.webp              — A+ quartz product + home teaser
+  Rutilated-Quartz.webp    — Rutile quartz product
+  mining-supply.jpg        — Home mining services card
+
+
+clients/partners/
+-----
+  chilanga.png
+  elswedyelectric.png
+  rcz.png
+  fqm.png
+  barrick.png
+  sofricangol.png          — Optional (site uses text brand if missing)
+  kansanshi.png            — Optional (site uses text brand if missing)

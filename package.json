@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "scripts": {
+    "optimize-images": "node scripts/optimize-images.mjs && node scripts/update-image-paths.mjs",
+    "cleanup-images": "node scripts/cleanup-images.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3"
+  }
+}
