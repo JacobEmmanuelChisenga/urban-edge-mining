@@ -22,6 +22,7 @@
 
     return (
       '<div class="wa-widget" id="waWidget" aria-live="polite">' +
+      '  <button type="button" class="wa-widget__backdrop" aria-label="Close chat" hidden></button>' +
       '  <div class="wa-widget__panel" role="dialog" aria-label="WhatsApp chat" aria-hidden="true">' +
       '    <header class="wa-widget__header">' +
       '      <div class="wa-widget__brand">' +
@@ -54,16 +55,20 @@
     );
   }
 
-  function openChat(widget, panel, toggle) {
+  function openChat(widget, panel, toggle, backdrop) {
     widget.classList.add("is-open");
     panel.setAttribute("aria-hidden", "false");
     toggle.setAttribute("aria-expanded", "true");
+    if (backdrop) backdrop.hidden = false;
+    document.body.classList.add("wa-widget-open");
   }
 
-  function closeChat(widget, panel, toggle) {
+  function closeChat(widget, panel, toggle, backdrop) {
     widget.classList.remove("is-open");
     panel.setAttribute("aria-hidden", "true");
     toggle.setAttribute("aria-expanded", "false");
+    if (backdrop) backdrop.hidden = true;
+    document.body.classList.remove("wa-widget-open");
   }
 
   function sendMessage(message) {
@@ -83,6 +88,7 @@
 
     var panel = widget.querySelector(".wa-widget__panel");
     var toggle = widget.querySelector(".wa-widget__toggle");
+    var backdrop = widget.querySelector(".wa-widget__backdrop");
     var closeBtn = widget.querySelector(".wa-widget__close");
     var sendBtn = widget.querySelector(".wa-widget__send");
     var input = widget.querySelector(".wa-widget__input");
@@ -90,16 +96,22 @@
 
     toggle.addEventListener("click", function () {
       if (widget.classList.contains("is-open")) {
-        closeChat(widget, panel, toggle);
+        closeChat(widget, panel, toggle, backdrop);
       } else {
-        openChat(widget, panel, toggle);
+        openChat(widget, panel, toggle, backdrop);
         input.focus();
       }
     });
 
     closeBtn.addEventListener("click", function () {
-      closeChat(widget, panel, toggle);
+      closeChat(widget, panel, toggle, backdrop);
     });
+
+    if (backdrop) {
+      backdrop.addEventListener("click", function () {
+        closeChat(widget, panel, toggle, backdrop);
+      });
+    }
 
     sendBtn.addEventListener("click", function () {
       sendMessage(input.value);
@@ -114,13 +126,13 @@
 
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && widget.classList.contains("is-open")) {
-        closeChat(widget, panel, toggle);
+        closeChat(widget, panel, toggle, backdrop);
       }
     });
 
     setTimeout(function () {
       if (!autoOpened && !widget.classList.contains("is-open")) {
-        openChat(widget, panel, toggle);
+        openChat(widget, panel, toggle, backdrop);
         autoOpened = true;
       }
     }, AUTO_OPEN_MS);
