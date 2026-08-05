@@ -2,19 +2,36 @@
  * UrbanEdge — modern WhatsApp chat widget (vanilla JS)
  */
 (function () {
-  
+
   var PHONE = "260967283451";
   var DEFAULT_MESSAGE =
     "Hello Urban Edge Mining.\nI would like to request a quotation for your services.";
   var POPUP_LINES = [
     "Hello 👋",
-    "Welcome to Urban Edge Mining.",
+    "Welcome to Urban Edge Mining and Engineering.",
     "",
     "Need a quotation or have questions about our Mining, Civil Engineering, Construction or Mechanical Engineering services?",
     "",
     "Our team is ready to assist you.",
   ];
   var AUTO_OPEN_MS = 5000;
+  var SESSION_KEY = "urbanedge-wa-popup-seen";
+
+  function hasSeenPopup() {
+    try {
+      return sessionStorage.getItem(SESSION_KEY) === "1";
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function markPopupSeen() {
+    try {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    } catch (error) {
+      /* ignore private browsing storage errors */
+    }
+  }
 
   function buildMarkup() {
     var bubbleHtml = POPUP_LINES.map(function (line) {
@@ -57,6 +74,7 @@
   }
 
   function openChat(widget, panel, toggle, backdrop) {
+    markPopupSeen();
     widget.classList.add("is-open");
     panel.setAttribute("aria-hidden", "false");
     toggle.setAttribute("aria-expanded", "true");
@@ -70,6 +88,7 @@
     toggle.setAttribute("aria-expanded", "false");
     if (backdrop) backdrop.hidden = true;
     document.body.classList.remove("wa-widget-open");
+    markPopupSeen();
   }
 
   function sendMessage(message) {
@@ -93,7 +112,6 @@
     var closeBtn = widget.querySelector(".wa-widget__close");
     var sendBtn = widget.querySelector(".wa-widget__send");
     var input = widget.querySelector(".wa-widget__input");
-    var autoOpened = false;
 
     toggle.addEventListener("click", function () {
       if (widget.classList.contains("is-open")) {
@@ -115,6 +133,7 @@
     }
 
     sendBtn.addEventListener("click", function () {
+      markPopupSeen();
       sendMessage(input.value);
     });
 
@@ -131,12 +150,13 @@
       }
     });
 
-    setTimeout(function () {
-      if (!autoOpened && !widget.classList.contains("is-open")) {
-        openChat(widget, panel, toggle, backdrop);
-        autoOpened = true;
-      }
-    }, AUTO_OPEN_MS);
+    if (!hasSeenPopup()) {
+      setTimeout(function () {
+        if (!hasSeenPopup() && !widget.classList.contains("is-open")) {
+          openChat(widget, panel, toggle, backdrop);
+        }
+      }, AUTO_OPEN_MS);
+    }
   }
 
   if (document.readyState === "loading") {
