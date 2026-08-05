@@ -13,11 +13,35 @@
   right: 1.25rem;
   bottom: 1.25rem;
   z-index: 9999;
+  isolation: isolate;
   font-family: "Open Sans", system-ui, sans-serif;
   font-size: 0.9rem;
   line-height: 1.5;
 }
 
+/* Layer 0 — dimmed backdrop (must stay below panel) */
+.wa-widget__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(26, 26, 26, 0.45);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.wa-widget__backdrop:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Layer 1 — chat panel */
 .wa-widget__panel {
   position: absolute;
   right: 0;
@@ -37,7 +61,7 @@
     transform 0.28s ease,
     visibility 0.28s ease;
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 }
 
 .wa-widget.is-open .wa-widget__panel {
@@ -45,6 +69,22 @@
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+}
+
+/* Layer 2 — floating button */
+.wa-widget__toggle {
+  position: relative;
+  width: 3.75rem;
+  height: 3.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--wa-primary) 0%, var(--wa-primary-dark) 100%);
+  color: #fff;
+  font-size: 1.65rem;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(249, 115, 22, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 2;
 }
 
 .wa-widget__header {
@@ -181,6 +221,7 @@
   font: inherit;
   line-height: 1.45;
   resize: none;
+  box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -221,21 +262,6 @@
   font-size: 1rem;
 }
 
-.wa-widget__toggle {
-  position: relative;
-  width: 3.75rem;
-  height: 3.75rem;
-  border: 0;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--wa-primary) 0%, var(--wa-primary-dark) 100%);
-  color: #fff;
-  font-size: 1.65rem;
-  cursor: pointer;
-  box-shadow: 0 10px 28px rgba(249, 115, 22, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
-  z-index: 1;
-}
-
 .wa-widget__toggle:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 14px 32px rgba(249, 115, 22, 0.42);
@@ -251,32 +277,16 @@
   pointer-events: none;
 }
 
-.wa-widget.is-open .wa-widget__toggle::after {
-  animation: none;
-  opacity: 0;
-}
-
-.wa-widget__backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  background: rgba(26, 26, 26, 0.45);
-  cursor: pointer;
-  z-index: 9998;
-}
-
-.wa-widget.is-open .wa-widget__backdrop {
-  display: block;
-}
-
 .wa-widget.is-open .wa-widget__toggle {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transform: scale(0.85);
+}
+
+.wa-widget.is-open .wa-widget__toggle::after {
+  animation: none;
+  opacity: 0;
 }
 
 body.wa-widget-open {
@@ -299,8 +309,6 @@ body.wa-widget-open {
   .wa-widget {
     right: max(1rem, env(safe-area-inset-right));
     bottom: max(1rem, env(safe-area-inset-bottom));
-    left: max(1rem, env(safe-area-inset-left));
-    width: auto;
   }
 
   .wa-widget__panel {
@@ -310,7 +318,7 @@ body.wa-widget-open {
     bottom: max(1rem, env(safe-area-inset-bottom));
     width: auto;
     max-width: none;
-    max-height: min(32rem, calc(100dvh - 2rem - env(safe-area-inset-bottom)));
+    max-height: min(28rem, calc(100dvh - 2rem - env(safe-area-inset-bottom)));
     transform-origin: bottom center;
     display: flex;
     flex-direction: column;
@@ -334,9 +342,9 @@ body.wa-widget-open {
   }
 
   .wa-widget__body {
-    flex: 1;
+    flex: 1 1 auto;
     min-height: 0;
-    max-height: none;
+    max-height: 9.5rem;
     padding: 0.9rem 1rem;
   }
 
@@ -346,13 +354,14 @@ body.wa-widget-open {
   }
 
   .wa-widget__footer {
-    padding: 0.9rem 1rem max(1.15rem, env(safe-area-inset-bottom));
+    flex-shrink: 0;
+    padding: 0.9rem 1rem max(1rem, env(safe-area-inset-bottom));
   }
 
   .wa-widget__input {
-    min-height: 3.75rem;
-    max-height: 5.5rem;
-    font-size: 1rem;
+    min-height: 3.5rem;
+    max-height: 5rem;
+    font-size: 16px;
   }
 
   .wa-widget__send {
