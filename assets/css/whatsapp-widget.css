@@ -172,16 +172,26 @@
 
 .wa-widget__close {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 2rem;
   height: 2rem;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 1.35rem;
-  line-height: 1;
   cursor: pointer;
   transition: background 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.wa-widget__close .bi {
+  display: block;
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .wa-widget__close:hover {

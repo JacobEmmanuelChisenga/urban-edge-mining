@@ -2,7 +2,8 @@
  * UrbanEdge — modern WhatsApp chat widget (vanilla JS)
  */
 (function () {
-  var PHONE = "260962933617";
+  
+  var PHONE = "260967283451";
   var DEFAULT_MESSAGE =
     "Hello Urban Edge Mining.\nI would like to request a quotation for your services.";
   var POPUP_LINES = [
@@ -34,7 +35,7 @@
       '          <span class="wa-widget__status"><span class="wa-widget__status-dot" aria-hidden="true"></span>Typically replies within a few hours</span>' +
       "        </div>" +
       "      </div>" +
-      '      <button type="button" class="wa-widget__close" aria-label="Close chat">&times;</button>' +
+      '      <button type="button" class="wa-widget__close" aria-label="Close chat"><i class="bi bi-x-lg" aria-hidden="true"></i></button>' +
       "    </header>" +
       '    <div class="wa-widget__body">' +
       '      <div class="wa-widget__bubble">' + bubbleHtml + "</div>" +
