@@ -1,0 +1,278 @@
+/* UrbanEdge — modern WhatsApp chat widget */
+
+.wa-widget {
+  --wa-primary: #f97316;
+  --wa-primary-dark: #ea580c;
+  --wa-dark: #1a1a1a;
+  --wa-muted: #6c757d;
+  --wa-surface: #ffffff;
+  --wa-bg: #f4f5f7;
+  --wa-radius: 1rem;
+  --wa-shadow: 0 18px 48px rgba(26, 26, 26, 0.18);
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 9999;
+  font-family: "Open Sans", system-ui, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.wa-widget__panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.85rem);
+  width: min(22rem, calc(100vw - 2rem));
+  background: var(--wa-surface);
+  border: 1px solid rgba(26, 26, 26, 0.08);
+  border-radius: var(--wa-radius);
+  box-shadow: var(--wa-shadow);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.96);
+  transform-origin: bottom right;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    visibility 0.28s ease;
+  pointer-events: none;
+}
+
+.wa-widget.is-open .wa-widget__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.wa-widget__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.9rem;
+  background: linear-gradient(135deg, var(--wa-dark) 0%, #2a2a2a 100%);
+  color: #fff;
+}
+
+.wa-widget__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.wa-widget__avatar {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid rgba(249, 115, 22, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.wa-widget__avatar img {
+  width: 2rem;
+  height: auto;
+  max-height: 2rem;
+  object-fit: contain;
+  display: block;
+  mix-blend-mode: screen;
+}
+
+.wa-widget__brand-text {
+  min-width: 0;
+}
+
+.wa-widget__brand strong {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.wa-widget__status {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.wa-widget__status-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+  flex-shrink: 0;
+}
+
+.wa-widget__close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.wa-widget__close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.wa-widget__body {
+  padding: 1rem;
+  background: var(--wa-bg);
+  max-height: 14rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 26, 26, 0.2) transparent;
+}
+
+.wa-widget__bubble {
+  position: relative;
+  max-width: 92%;
+  padding: 0.85rem 1rem;
+  background: var(--wa-surface);
+  border: 1px solid rgba(26, 26, 26, 0.06);
+  border-radius: 0.85rem 0.85rem 0.85rem 0.2rem;
+  color: var(--wa-dark);
+  box-shadow: 0 2px 8px rgba(26, 26, 26, 0.05);
+}
+
+.wa-widget__bubble p {
+  margin: 0;
+}
+
+.wa-widget__bubble p + p {
+  margin-top: 0.55rem;
+}
+
+.wa-widget__footer {
+  padding: 0.85rem 1rem 1rem;
+  background: var(--wa-surface);
+  border-top: 1px solid rgba(26, 26, 26, 0.06);
+}
+
+.wa-widget__input {
+  width: 100%;
+  min-height: 4.5rem;
+  max-height: 7rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid rgba(26, 26, 26, 0.12);
+  border-radius: 0.65rem;
+  background: var(--wa-bg);
+  color: var(--wa-dark);
+  font: inherit;
+  line-height: 1.45;
+  resize: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wa-widget__input:focus {
+  outline: none;
+  border-color: rgba(249, 115, 22, 0.55);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+.wa-widget__send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--wa-primary) 0%, var(--wa-primary-dark) 100%);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.28);
+}
+
+.wa-widget__send:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(249, 115, 22, 0.36);
+}
+
+.wa-widget__send .bi {
+  font-size: 1rem;
+}
+
+.wa-widget__toggle {
+  position: relative;
+  width: 3.75rem;
+  height: 3.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--wa-primary) 0%, var(--wa-primary-dark) 100%);
+  color: #fff;
+  font-size: 1.65rem;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(249, 115, 22, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wa-widget__toggle:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 32px rgba(249, 115, 22, 0.42);
+}
+
+.wa-widget__toggle::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(249, 115, 22, 0.45);
+  animation: wa-pulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+.wa-widget.is-open .wa-widget__toggle::after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .wa-widget {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .wa-widget__panel {
+    width: min(20rem, calc(100vw - 1.5rem));
+  }
+}

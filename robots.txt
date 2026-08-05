@@ -1,0 +1,6 @@
+# UrbanEdge Mining & Engineering
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.urbanedgemining.com/sitemap.xml
