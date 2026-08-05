@@ -3,7 +3,7 @@
  */
 (function () {
 
-  var PHONE = "260973551296";
+  var PHONE = "260967283451";
   var DEFAULT_MESSAGE =
     "Hello Urban Edge Mining.\nI would like to request a quotation for your services.";
   var POPUP_LINES = [
